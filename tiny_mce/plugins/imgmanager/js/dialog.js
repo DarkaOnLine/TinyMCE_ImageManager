@@ -1,12 +1,17 @@
 tinyMCEPopup.requireLangPack();
 
 var ImgManagerDialog = {
+    
+    //INIT
     init : function() {
         var f = document.forms[0];
-        $('#imageInserModal').modal({show:false});
-        this.openDirectory(null, null);
-        this.populateDirectoriesSelect("directoriesSelect","Choose directory to upload to:");
-        this.populateDirectoriesSelect("directoriesSelectParent","Choose parent directory:");
+        
+        $('#imageInserModal').modal({show:false});  //Image insert popup init
+        this.openDirectory(null, null); // populate directories and files
+        this.populateDirectoriesSelect("directoriesSelect","Choose directory to upload to:"); //Populate folder select infomation
+        this.populateDirectoriesSelect("directoriesSelectParent","Choose parent directory:"); //Populate folder select infomation
+        
+        //Uploadify INIT
         $("#file_upload").uploadify({
             'uploader'  :  tinyMCEPopup.getWindowArg('plugin_url')+'/libs/uploadify.swf',
             'script'    : tinyMCEPopup.getWindowArg('plugin_url')+'/libs/ajax.php',

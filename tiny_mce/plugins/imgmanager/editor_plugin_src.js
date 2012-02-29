@@ -25,9 +25,10 @@
 			// Register the command so that it can be invoked by using tinyMCE.activeEditor.execCommand('mceImgmanager');
 			ed.addCommand('mceImgmanager', function() {
 				ed.windowManager.open({
-					file : url + '/dialog.htm',
-					width : 320,
-					height : 120,
+					file : url + '/dialog.php',
+					width : 1024,
+					height : 700,
+                                        popup_css : false, 
 					inline : 1
 				}, {
 					plugin_url : url, // Plugin absolute URL
@@ -39,7 +40,7 @@
 			ed.addButton('imgmanager', {
 				title : 'Image Manager',
 				cmd : 'mceImgmanager',
-				image : url + '/img/example.gif'
+				image : url + '/img/imgmanager.png'
 			});
 
 			// Add a node change handler, selects the button in the UI when a image is selected

@@ -15,6 +15,11 @@ class FilesHandler{
         
     }
     
+    /**
+     * Get basic information about image
+     * @param string $file path to the file
+     * @return array
+     */
     public function getFileInfo($file){
         $fileInfo = array();
         $imgInfo = getimagesize($file);
@@ -134,7 +139,7 @@ class FilesHandler{
     
     
     
-    // Helper functions
+    // Helper functions for HTML5 upload
 
     public function exit_status($str){
             echo json_encode(array('status'=>$str));

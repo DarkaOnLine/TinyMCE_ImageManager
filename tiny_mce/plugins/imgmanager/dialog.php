@@ -8,17 +8,15 @@
         <meta name="description" content="Image Manager">
         <meta name="author" content="Darius Matulionis http://matulionis.lt">
 
-
-        <link href="css/bootstrap.css" rel="stylesheet">
-        <link href="css/styles.css" rel="stylesheet">
+        <link href="css/bootstrap.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
         <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/jquery.filedrop.js"></script>
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/swfobject.js"></script>
-        <script type="text/javascript" src="js/jquery.uploadify.v2.1.4.js"></script>
-
+        <script type="text/javascript" src="js/jquery.uploadify.v2.1.4.min.js"></script>
         <script type="text/javascript" src="js/dialog.js"></script>
 
     </head>
@@ -108,7 +106,7 @@
                 </select>
             </div>
         </div>
-        <div class="thumbnail span2 pull-right"><img id="imgThumb" src="http://localhost/ImageManager/upload/craniodsgn-faces-550x770.jpg" height="100px"  /></div>
+        <div class="thumbnail span2 pull-right"><img id="imgThumb" src="" height="100px"  /></div>
         <div class="clearfix"></div>
     </div>
     <div class="modal-footer">

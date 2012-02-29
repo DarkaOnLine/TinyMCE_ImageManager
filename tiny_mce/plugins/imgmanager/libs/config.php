@@ -9,12 +9,16 @@
 ini_set("display_startup_errors", 0); // set 1 to show errors
 ini_set("display_errors", 0); // set 1 to show errors
 
+/**
+ * AUTH SHOULD BE DONE HERE !!!! 
+ */
+//!!!! CHANGE THIS !!!!!!
 $auth = true;
 
 if(!$auth){
     die("You are not allowed to be here !!!");
 }
-
+//------------------------------------------------------------
 
 
 //PLUGIN PATH
