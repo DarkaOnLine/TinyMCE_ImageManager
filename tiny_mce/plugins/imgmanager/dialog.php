@@ -22,7 +22,6 @@
         <script type="text/javascript" src="js/dialog.js"></script>
     </head>
     <body>
-        <?= $_SESSION['session_id'] ?>
         <br/>
         <div class="container-fluid">
             <div class="row-fluid">
