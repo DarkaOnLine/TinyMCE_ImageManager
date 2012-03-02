@@ -10,6 +10,7 @@
 
         <link href="css/bootstrap.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
+        <script type="text/javascript"> var hash = "<?= ENCRIPTED_SESSION_ID ?>";</script>
         <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -19,9 +20,9 @@
         <script type="text/javascript" src="js/jquery.uploadify.v2.1.4.min.js"></script>
         <script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
         <script type="text/javascript" src="js/dialog.js"></script>
-
     </head>
     <body>
+        <?= $_SESSION['session_id'] ?>
         <br/>
         <div class="container-fluid">
             <div class="row-fluid">

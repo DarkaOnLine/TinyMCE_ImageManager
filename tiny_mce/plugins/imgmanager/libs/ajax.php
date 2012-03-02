@@ -5,6 +5,19 @@
  * @copyright Darius Matulionis
  * @author Darius Matulionis <darius@matulionis.lt>
  */
+
+//UPLOADIFY SESSION AUTH
+//!!!! CHANGE THIS IF NEDED!!!!!!
+if (!empty($_FILES) && isset($_FILES['Filedata']) && $_REQUEST['hash']) {
+    require 'EncriptDecript.php';
+    $ed = new EncriptDecript();
+    $session_id = $ed->decript($_REQUEST['hash']);
+    $_COOKIE['PHPSESSID'] = $session_id;
+    session_id($session_id);
+    session_start();
+    $_SESSION['user_auth'] = true;
+}
+
 require_once 'config.php';
 require_once 'FilesHandler.php';
 $filesHandler = new FilesHandler();
@@ -21,7 +34,6 @@ if (!empty($_FILES) && isset($_FILES['Filedata'])) {
 
     $targetPath = UPLOADS_PATH . DIRECTORY_SEPARATOR . $sub_dircetory;
 
-    //$targetPath = $_SERVER['DOCUMENT_ROOT'] . $_REQUEST['folder'] . '/';
     $targetFile = str_replace('//', '/', $targetPath) . $_FILES['Filedata']['name'];
 
     move_uploaded_file($tempFile, $targetFile);

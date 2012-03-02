@@ -19,7 +19,7 @@ var ImgManagerDialog = {
             'folder'    : '',
             'auto'      : false,
             'multi'       : true,
-            'scriptData': {"uploadify":1}
+            'scriptData': {"uploadify":1,"hash":hash}
         });
     },
     close : function() {

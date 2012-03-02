@@ -12,8 +12,21 @@ ini_set("display_errors", 0); // set 1 to show errors
 /**
  * AUTH SHOULD BE DONE HERE !!!! 
  */
-//!!!! CHANGE THIS !!!!!!
-$auth = true;
+//!!!! CHANGE THIS !!!!!! AND THEN ajax.php
+
+$session_id = session_id() ? session_id() : $_COOKIE["PHPSESSID"];
+if(session_start()){
+    $_SESSION['session_id'] = $session_id;
+    $_SESSION['user_auth'] = true;
+}
+
+$auth = false;
+if($_SESSION['session_id'] && $_SESSION['user_auth']){
+    $auth = true;
+    require 'EncriptDecript.php';
+    $ed = new EncriptDecript();
+    $encripted_session_id =$ed->encript($session_id);
+}
 
 if(!$auth){
     die("You are not allowed to be here !!!");
@@ -28,6 +41,10 @@ defined('PLUGIN_PATH')
 //LIBS PATH
 defined('LIBS_PATH')
         || define('LIBS_PATH', realpath(dirname(__FILE__)));
+
+//ENCRIPTED SESSION ID
+defined('ENCRIPTED_SESSION_ID')
+        || define('ENCRIPTED_SESSION_ID', $encripted_session_id);
 
 
 //!!!! CHANGE THIS !!!!!!
