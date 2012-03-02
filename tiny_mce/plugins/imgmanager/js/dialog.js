@@ -1,7 +1,7 @@
 tinyMCEPopup.requireLangPack();
 
 var ImgManagerDialog = {
-    
+    cropedImageData: null,
     //INIT
     init : function() {
         var f = document.forms[0];
@@ -38,10 +38,10 @@ var ImgManagerDialog = {
         
         var html = '<img src="'+src+'" ';
         var img = $("<img>",{"src":src});
-        if(alt){ img.attr("alt",alt); html = html+' alt="'+alt+'"';}
-        if(width){ img.attr("width",width);  html = html+' width="'+width+'"';}
-        if(height){ img.attr("height",height);  html = html+' height="'+height+'"';}
-        if(align){ img.attr("align",align);  html = html+' align="'+align+'"';}
+        if(alt){img.attr("alt",alt);html = html+' alt="'+alt+'"';}
+        if(width){img.attr("width",width);html = html+' width="'+width+'"';}
+        if(height){img.attr("height",height);html = html+' height="'+height+'"';}
+        if(align){img.attr("align",align);html = html+' align="'+align+'"';}
         html = html + ' />';
         
         var ed = tinyMCEPopup.editor, el;
@@ -142,30 +142,90 @@ var ImgManagerDialog = {
             }
         });
     },
-    insertImageDialog: function(imgUrl){
-        var modal = $('#imageInserModal');
-        modal.find("#imgThumb").attr("src",imgUrl);
+    getImageInformations: function(imgUrl){
+         
+        var return_data = null;
         $.ajax({
+            async: false,
             url: tinyMCEPopup.getWindowArg('plugin_url')+'/libs/ajax.php?getImageInformation=1&url='+imgUrl,
             type: 'GET',
             dataType:  'text json',
             success:function(data){
-                modal.find("#imgAlt").val(data.name);
-                
-                modal.find("#imgWidth").val(data.width);
-                modal.find("#imgHeight").val(data.height);
-                
-                modal.find("#imgOrigWidth").val(data.width);
-                modal.find("#imgOrigHeight").val(data.height);
-                
-                modal.find("#imgWebUrl").val(data.web_base_url);
-                
-                modal.modal('show');
+                return_data = data;
             },
             error:function(){
                 alert("Error eccured. Please refresh site and try again!");
             }
         });
+        return return_data;
+    },
+    insertImageDialog: function(imgUrl){
+        var modal = $('#imageInserModal');
+        modal.find("#imgThumb").attr("src",imgUrl);
+        
+        var data = this.getImageInformations(imgUrl);
+        
+        modal.find("#imgAlt").val(data.name);
+        modal.find("#imgWidth").val(data.width);
+        modal.find("#imgHeight").val(data.height);
+        modal.find("#imgOrigWidth").val(data.width);
+        modal.find("#imgOrigHeight").val(data.height);
+        modal.find("#imgWebUrl").val(data.web_base_url);
+        modal.modal('show');
+        
+    },
+    cropImage: function(imgUrl){
+        var modal = $('#imageCropModal');
+        modal.find("#cropImgThubContainer").html("").append($("<img>",{"src":"","id":"imgCrop"}));
+        var data = this.getImageInformations(imgUrl);
+        this.cropedImageData = data;
+            
+        var this_boxHeight = 400;
+        var this_boxWidth = 460;
+
+        if(data.height > data.width){
+            modal.find("#cropImgThubContainer").removeClass("span6").addClass("span4").attr("style","margin-left:130px;");
+            modal.attr("style","min-height:580px;");
+            this_boxHeight = 430;
+            this_boxWidth = 450;
+            
+        }else{
+            modal.find("#cropImgThubContainer").removeClass("span4").addClass("span6").attr("style","");
+            modal.attr("style","");
+        }
+        modal.find("#imgCrop").attr("src",imgUrl).Jcrop({
+                boxWidth: this_boxWidth, 
+                boxHeight: this_boxHeight,
+                onSelect: Helppers.jCropUpdateCoords
+        });
+        modal.modal('show');
+        
+    },
+    cropAndSave: function(overwrite){
+        
+        if(Helppers.jCropCheckCoords()){
+            $.ajax({
+                async: false,
+                url: tinyMCEPopup.getWindowArg('plugin_url')+'/libs/ajax.php?cropImg=1',
+                type: 'POST',
+                data:{
+                    imgData:    ImgManagerDialog.cropedImageData,
+                    overwrite:  overwrite,
+                    cW:         $("#w").val(),
+                    cH:         $("#h").val(),
+                    cX:         $("#x").val(),
+                    cY:         $("#y").val()
+                },
+                dataType:  'text json',
+                success:function(data){
+                    ImgManagerDialog.openDirectory(null, null);
+                    $('#imageCropModal').modal('hide');
+                },
+                error:function(){
+                    alert("Error eccured. Please refresh site and try again!");
+                }
+            });
+        }
     },
     initImageUpload : function(){
         if (tinymce.isIE){
@@ -219,9 +279,6 @@ var Helppers = {
                 
             }
             $("#filesContainer").append(files_ul);
-            
-            
-            
         }
     },
     getImageHtml: function(fileName){
@@ -233,6 +290,9 @@ var Helppers = {
         var ulAction = $("<ul>",{"class":"dropdown-menu"});
         ulAction.append($("<li>").append($("<a>").html('<i class="icon-play-circle"></i>  Insert').click(function(){
             ImgManagerDialog.insertImageDialog(fileName);
+        })));
+        ulAction.append($("<li>").append($("<a>").html('<i class="icon-edit"></i>  Crop').click(function(){
+            ImgManagerDialog.cropImage(fileName);
         })));
         ulAction.append($("<li>").append($("<a>").html('<i class="icon-trash"></i> Delete').click(function(){
             if(confirm("Are you sure you want to delete file ? ")){
@@ -349,7 +409,18 @@ var Helppers = {
                 }
             }
         }
-    } 
+    },
+    jCropUpdateCoords: function(c){
+        jQuery('#x').val(c.x);
+	jQuery('#y').val(c.y);
+	jQuery('#w').val(c.w);
+	jQuery('#h').val(c.h);
+    },
+    jCropCheckCoords: function(){
+        if (parseInt(jQuery('#w').val())>0) return true;
+	alert('Please select a crop region.');
+	return false;
+    }
     
 };
 

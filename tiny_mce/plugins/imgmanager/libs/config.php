@@ -32,7 +32,7 @@ defined('LIBS_PATH')
 
 //!!!! CHANGE THIS !!!!!!
 // WEB BASE DIRECTORY
-defined('WEB_BASE') || define('WEB_BASE', 'ImageManager/upload' );
+defined('WEB_BASE') || define('WEB_BASE', 'TinyMCE_ImageManager/upload' );
 
 
 //!!!! CHANGE THIS !!!!!!

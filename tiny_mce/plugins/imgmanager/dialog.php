@@ -17,6 +17,7 @@
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/swfobject.js"></script>
         <script type="text/javascript" src="js/jquery.uploadify.v2.1.4.min.js"></script>
+        <script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
         <script type="text/javascript" src="js/dialog.js"></script>
 
     </head>
@@ -112,5 +113,27 @@
     <div class="modal-footer">
         <a href="#" class="btn btn-success" onclick="ImgManagerDialog.insert();">Insert Image</a>
         <a href="#" class="btn" onclick="$('#imageInserModal').modal('hide')">Close</a>
+    </div>
+</div>
+
+<div class="modal fade" id="imageCropModal" style="display: none;">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>Crop Image</h3>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" id="x" name="x" />
+        <input type="hidden" id="y" name="y" />
+        <input type="hidden" id="w" name="w" />
+        <input type="hidden" id="h" name="h" />
+        <div class="thumbnail span6" id="cropImgThubContainer">
+            <img id="imgCrop" src="" />
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-success" onclick="ImgManagerDialog.cropAndSave()">Crop and save copy</a>
+        <a href="#" class="btn btn-success" onclick="ImgManagerDialog.cropAndSave(true)">Crop and overwrite</a>
+        <a href="#" class="btn" onclick="$('#imageCropModal').modal('hide')">Close</a>
     </div>
 </div>
