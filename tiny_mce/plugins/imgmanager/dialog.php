@@ -41,7 +41,8 @@
                     </div>
                     <h3>Images</h3>
                     <div style="max-height: 400px; overflow: scroll;">
-                        <div id="filesContainer"><!-- Horizontal files content goes here --></div>
+                        <div id="filesContainer"><!-- Files content goes here --></div>
+                        <div class="clearfix" style="height: 70px;"></div>
                     </div>
                 </div>
                 <div class="span8 well contentContainers" id="tab2" style="display: none;">
