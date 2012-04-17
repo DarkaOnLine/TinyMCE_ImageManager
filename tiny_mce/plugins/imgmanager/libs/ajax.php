@@ -205,7 +205,7 @@ if (strtolower($_SERVER['REQUEST_METHOD']) != 'post') {
         if (isset($_GET['directory']))
             $sub_dircetory = $_GET['directory'];
 
-        $file = UPLOADS_PATH . DIRECTORY_SEPARATOR . $sub_dircetory . $pic['name'];
+        $file = UPLOADS_PATH . DIRECTORY_SEPARATOR . $sub_dircetory  . DIRECTORY_SEPARATOR .  $pic['name'];
         if (move_uploaded_file($pic['tmp_name'], $file)) {
             $filesHandler->exit_status('File was uploaded successfuly!');
         }
